@@ -47,7 +47,7 @@ public class StudentMarks {
 
     public static ArrayList<Student> readStudentData(String filename) {
         ArrayList<Student> studentList = new ArrayList<>();
-
+        //Functional requirement 1: Reading the student data from file
         try {
             // Open the file for reading
             File file = new File(filename);
@@ -90,6 +90,24 @@ public class StudentMarks {
 
         return studentList;
     }
+    
+    //Functional Requirement 2: Print Student data and calculated total marks of student
+    public static void calculateTotalMarksAndDisplay(ArrayList<Student> studentList) {
+        for (Student student : studentList) {
+            double totalMarks = 0;
+
+            for (double mark : student.getMarks()) {
+                if (mark != -1.0) {
+                    totalMarks += mark;
+                }
+            }
+
+            System.out.println("Name: " + student.getName() +
+                    ", Student ID: " + student.getStudentID() +
+                    ", Marks: " + java.util.Arrays.toString(student.getMarks()) +
+                    ", Total Mark: " + totalMarks);
+        }
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -98,7 +116,8 @@ public class StudentMarks {
         while(true){
         System.out.println("Menu:");
         System.out.println("1. Read Student Data from a file");
-        System.out.println("2. Exit");
+        System.out.println("2. Calculate total marks and Display Student Data");
+        System.out.println("3. Exit");
         
         System.out.print("Enter Your Choice: ");
         
@@ -112,10 +131,28 @@ public class StudentMarks {
                 studentList = readStudentData(filename);
                 break;
             case 2:
+                while (true) {
+        if (studentList != null) {
+            calculateTotalMarksAndDisplay(studentList);
+            break;  // Exit the loop if the operation is successful
+        } else {
+            System.out.println("Please read student data first (option 1).");
+            System.out.print("Press Enter to return to the main menu...");
+            scanner.nextLine();  // Consume the newline character
+            scanner.nextLine();  // Wait for user input
+            break;  // Exit the loop
+        }
+    }
+    break;  // Break added to exit the switch statement
+            case 3:
                 scanner.close();
                 System.exit(0);
                 break;
-            }
+            default:
+                System.out.println("Invalid choice. Try again.");
+                break;
+            }//end of switch
+            
         }
     }
 }

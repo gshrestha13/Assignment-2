@@ -49,33 +49,43 @@ public class StudentMarks {
         ArrayList<Student> studentList = new ArrayList<>();
 
         try {
-            Scanner scanner = new Scanner(new File(filename));
-            String unitName = scanner.nextLine().trim();  // Read the unit name
-            scanner.nextLine();  // Skip header line
+            // Open the file for reading
+            File file = new File(filename);
+                   
+            if (file.exists()) {
+                System.out.println("File found. Reading data from " + filename + "...Successful");
+                Scanner scanner = new Scanner(file);
 
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] parts = line.split(",");
-                String lastName = parts[0].trim();
-                String firstName = parts[1].trim();
-                String studentID = parts[2].trim();
+                // Read the unit name and move to the next line
+                String unitName = scanner.nextLine().trim();
+                scanner.nextLine();  // Skip header line
+                
+                // Read Student data from file
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    String[] parts = line.split(",");
+                    String lastName = parts[0].trim();
+                    String firstName = parts[1].trim();
+                    String studentID = parts[2].trim();
 
-                double[] marks = new double[3];
-                for (int i = 0; i < 3; i++) {
-                    if (i + 3 < parts.length && !parts[i + 3].trim().isEmpty()) {
-                        marks[i] = Double.parseDouble(parts[i + 3].trim());
-                    } else {
-                        marks[i] = -1.0;  // Mark as -1 if empty
+                    double[] marks = new double[3];
+                    for (int i = 0; i < 3; i++) {
+                        if (i + 3 < parts.length && !parts[i + 3].trim().isEmpty()) {
+                            marks[i] = Double.parseDouble(parts[i + 3].trim());
+                        } else {
+                            marks[i] = -1.0;  // Mark as -1 if empty
+                        }
                     }
+
+                    studentList.add(new Student(unitName, studentID, lastName + ", " + firstName, marks));
                 }
-
-                studentList.add(new Student(unitName, studentID, lastName + ", " + firstName, marks));
+                //Close the Scanner
+                scanner.close();
+            }else{
+                System.out.println("File not found: " + filename);
             }
-
-            scanner.close();
-
         } catch (FileNotFoundException e) {
-            System.err.println("File not found: " + filename);
+            System.err.println("An error occurred while reading the file: " + e.getMessage());
         }
 
         return studentList;

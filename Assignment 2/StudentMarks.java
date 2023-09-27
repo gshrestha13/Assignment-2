@@ -174,6 +174,11 @@ public class StudentMarks {
                 }else{
                     System.out.println("Please read student data first (option 1).");
                 }
+                // Prompt to return to the main menu
+                System.out.print("Press Enter to return to the main menu...");
+                scanner.nextLine();  // Consume the newline character
+                scanner.nextLine();  // Wait for user input
+                break;  // Break added to exit the switch statement
             case 4:
                 scanner.close();
                 System.exit(0);

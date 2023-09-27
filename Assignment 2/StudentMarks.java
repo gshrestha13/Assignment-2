@@ -10,6 +10,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 class Student {
@@ -18,6 +19,7 @@ class Student {
     private String studentID;
     private String name;
     private double[] marks;
+    private double totalMarks;//new field to store total marks for F5
 
     public Student(String unitName, String studentID, String name, double[] marks) {
         this.unitName = unitName;
@@ -41,6 +43,28 @@ class Student {
     public double[] getMarks() {
         return marks;
     }
+    
+    //New Method to calculate and return total marks for F5
+    public double calculateTotalMarks() {
+        double total = 0;
+        for (double mark : marks) {
+            if (mark != -1.0) {
+                total += mark;
+            }
+        }
+        return total;
+    }
+    
+    // New method to set the total marks for F5
+    public void setTotalMarks(double totalMarks) {
+        this.totalMarks = totalMarks;
+    }
+
+    // New method to get the total marks for F5
+    public double getTotalMarks() {
+        return totalMarks;
+    }
+
 }
 
 public class StudentMarks {
@@ -128,6 +152,60 @@ public class StudentMarks {
             }
         }
     }
+
+    //Functional Requirement 4: Displaying to 5 Students with highest and lowest marks
+    public static void printTopAndBottomStudents(ArrayList<Student> studentList) {
+    // Calculate total marks for each student
+    for (Student student : studentList) {
+        double totalMarks = 0;
+        double[] marks = student.getMarks();
+        for (double mark : marks) {
+            if (mark != -1.0) {
+                totalMarks += mark;
+            }
+        }
+        student.setTotalMarks(totalMarks); // Set the total marks for the student
+    }
+
+    // Sort the student list based on total marks using a simple sorting algorithm
+    for (int i = 0; i < studentList.size() - 1; i++) {
+        for (int j = 0; j < studentList.size() - i - 1; j++) {
+            if (studentList.get(j).getTotalMarks() < studentList.get(j + 1).getTotalMarks()) {
+                // Swap students based on total marks
+                Student temp = studentList.get(j);
+                studentList.set(j, studentList.get(j + 1));
+                studentList.set(j + 1, temp);
+            }
+        }
+    }
+
+    System.out.println("Top 5 Students (Highest Total Marks):");
+    for (int i = 0; i < 5 && i < studentList.size(); i++) {
+        Student student = studentList.get(i);
+        double totalMarks = student.getTotalMarks();
+
+        // Print student information and total marks
+        System.out.println("Name: " + student.getName() +
+                ", Student ID: " + student.getStudentID() +
+                ", Marks: " + Arrays.toString(student.getMarks()) +
+                ", Total Mark: " + totalMarks);
+    }
+
+    System.out.println("\nTop 5 Students (Lowest Total Marks):");
+    for (int i = studentList.size() - 1, count = 0; count < 5 && i >= 0; i--) {
+        Student student = studentList.get(i);
+        double totalMarks = student.getTotalMarks();
+
+        // Print student information and total marks
+        System.out.println("Name: " + student.getName() +
+                ", Student ID: " + student.getStudentID() +
+                ", Marks: " + Arrays.toString(student.getMarks()) +
+                ", Total Mark: " + totalMarks);
+
+        count++;
+    }
+}
+
 
     //Functional Requirement 5: Creating Menus
     public static void main(String[] args) {

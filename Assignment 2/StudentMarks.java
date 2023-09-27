@@ -154,57 +154,57 @@ public class StudentMarks {
     }
 
     //Functional Requirement 4: Displaying to 5 Students with highest and lowest marks
-    public static void printTopAndBottomStudents(ArrayList<Student> studentList) {
-    // Calculate total marks for each student
-    for (Student student : studentList) {
-        double totalMarks = 0;
-        double[] marks = student.getMarks();
-        for (double mark : marks) {
-            if (mark != -1.0) {
-                totalMarks += mark;
+        public static void printTopAndBottomStudents(ArrayList<Student> studentList) {
+        // Calculate total marks for each student
+        for (Student student : studentList) {
+            double totalMarks = 0;
+            double[] marks = student.getMarks();
+            for (double mark : marks) {
+                if (mark != -1.0) {
+                    totalMarks += mark;
+                }
+            }
+            student.setTotalMarks(totalMarks); // Set the total marks for the student
+        }
+    
+        // Sort the student list based on total marks using a simple sorting algorithm
+        for (int i = 0; i < studentList.size() - 1; i++) {
+            for (int j = 0; j < studentList.size() - i - 1; j++) {
+                if (studentList.get(j).getTotalMarks() < studentList.get(j + 1).getTotalMarks()) {
+                    // Swap students based on total marks
+                    Student temp = studentList.get(j);
+                    studentList.set(j, studentList.get(j + 1));
+                    studentList.set(j + 1, temp);
+                }
             }
         }
-        student.setTotalMarks(totalMarks); // Set the total marks for the student
-    }
-
-    // Sort the student list based on total marks using a simple sorting algorithm
-    for (int i = 0; i < studentList.size() - 1; i++) {
-        for (int j = 0; j < studentList.size() - i - 1; j++) {
-            if (studentList.get(j).getTotalMarks() < studentList.get(j + 1).getTotalMarks()) {
-                // Swap students based on total marks
-                Student temp = studentList.get(j);
-                studentList.set(j, studentList.get(j + 1));
-                studentList.set(j + 1, temp);
-            }
+    
+        System.out.println("Top 5 Students (Highest Total Marks):");
+        for (int i = 0; i < 5 && i < studentList.size(); i++) {
+            Student student = studentList.get(i);
+            double totalMarks = student.getTotalMarks();
+    
+            // Print student information and total marks
+            System.out.println("Name: " + student.getName() +
+                    ", Student ID: " + student.getStudentID() +
+                    ", Marks: " + Arrays.toString(student.getMarks()) +
+                    ", Total Mark: " + totalMarks);
+        }
+    
+        System.out.println("\nTop 5 Students (Lowest Total Marks):");
+        for (int i = studentList.size() - 1, count = 0; count < 5 && i >= 0; i--) {
+            Student student = studentList.get(i);
+            double totalMarks = student.getTotalMarks();
+    
+            // Print student information and total marks
+            System.out.println("Name: " + student.getName() +
+                    ", Student ID: " + student.getStudentID() +
+                    ", Marks: " + Arrays.toString(student.getMarks()) +
+                    ", Total Mark: " + totalMarks);
+    
+            count++;
         }
     }
-
-    System.out.println("Top 5 Students (Highest Total Marks):");
-    for (int i = 0; i < 5 && i < studentList.size(); i++) {
-        Student student = studentList.get(i);
-        double totalMarks = student.getTotalMarks();
-
-        // Print student information and total marks
-        System.out.println("Name: " + student.getName() +
-                ", Student ID: " + student.getStudentID() +
-                ", Marks: " + Arrays.toString(student.getMarks()) +
-                ", Total Mark: " + totalMarks);
-    }
-
-    System.out.println("\nTop 5 Students (Lowest Total Marks):");
-    for (int i = studentList.size() - 1, count = 0; count < 5 && i >= 0; i--) {
-        Student student = studentList.get(i);
-        double totalMarks = student.getTotalMarks();
-
-        // Print student information and total marks
-        System.out.println("Name: " + student.getName() +
-                ", Student ID: " + student.getStudentID() +
-                ", Marks: " + Arrays.toString(student.getMarks()) +
-                ", Total Mark: " + totalMarks);
-
-        count++;
-    }
-}
 
 
     //Functional Requirement 5: Creating Menus
@@ -217,7 +217,8 @@ public class StudentMarks {
         System.out.println("1. Read Student Data from a file");
         System.out.println("2. Calculate total marks and Display Student Data");
         System.out.println("3. Display Students with total marks below a threshold");
-        System.out.println("4. Exit");
+        System.out.println("4. Print top 5 Students with highest and Lowest Marks");
+        System.out.println("5. Exit");
         
         System.out.print("Enter Your Choice: ");
         
@@ -258,6 +259,17 @@ public class StudentMarks {
                 scanner.nextLine();  // Wait for user input
                 break;  // Break added to exit the switch statement
             case 4:
+                if(studentList != null){
+                    printTopAndBottomStudents(studentList);
+                }else{
+                    System.out.println("Please read student data first (option 1).");
+                }
+                // Prompt to return to the main menu
+                System.out.print("Press Enter to return to the main menu...");
+                scanner.nextLine();  // Consume the newline character
+                scanner.nextLine();  // Wait for user input
+                break;  // Break added to exit the switch statement
+            case 5:
                 scanner.close();
                 System.exit(0);
                 break;

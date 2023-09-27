@@ -110,7 +110,7 @@ public class StudentMarks {
     }
     
     //Functional Requirement 3:  Displays the list of students with total marks less than a certain threshold
-    public static void printStudentsBelowThreshosld(ArrayList<Student> studentList, double threshold){
+    public static void printStudentsBelowThreshold(ArrayList<Student> studentList, double threshold){
         for(Student student : studentList){
             double totalMarks = 0;
             
@@ -118,13 +118,13 @@ public class StudentMarks {
                  if(mark != -1.0){
                     totalMarks += mark;
                 }
-                
+            } 
+            
             if(totalMarks < threshold){
                 System.out.println("Name: " + student.getName() +
                     ", Student ID: " + student.getStudentID() +
                     ", Marks: " + java.util.Arrays.toString(student.getMarks()) + 
                     ", Total Mark: " + totalMarks);
-            }
             }
         }
     }
@@ -138,7 +138,8 @@ public class StudentMarks {
         System.out.println("Menu:");
         System.out.println("1. Read Student Data from a file");
         System.out.println("2. Calculate total marks and Display Student Data");
-        System.out.println("3. Exit");
+        System.out.println("3. Display Students with total marks below a threshold");
+        System.out.println("4. Exit");
         
         System.out.print("Enter Your Choice: ");
         
@@ -166,6 +167,14 @@ public class StudentMarks {
                 }
                 break;  // Break added to exit the switch statement
             case 3:
+                if(studentList != null){
+                    System.out.print("Please Enter the Threshold: ");
+                    double threshold = scanner.nextDouble();
+                    printStudentsBelowThreshold(studentList, threshold);
+                }else{
+                    System.out.println("Please read student data first (option 1).");
+                }
+            case 4:
                 scanner.close();
                 System.exit(0);
                 break;

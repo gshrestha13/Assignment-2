@@ -108,7 +108,28 @@ public class StudentMarks {
                     ", Total Mark: " + totalMarks);
         }
     }
+    
+    //Functional Requirement 3:  Displays the list of students with total marks less than a certain threshold
+    public static void printStudentsBelowThreshosld(ArrayList<Student> studentList, double threshold){
+        for(Student student : studentList){
+            double totalMarks = 0;
+            
+            for(double mark : student.getMarks()){
+                 if(mark != -1.0){
+                    totalMarks += mark;
+                }
+                
+            if(totalMarks < threshold){
+                System.out.println("Name: " + student.getName() +
+                    ", Student ID: " + student.getStudentID() +
+                    ", Marks: " + java.util.Arrays.toString(student.getMarks()) + 
+                    ", Total Mark: " + totalMarks);
+            }
+            }
+        }
+    }
 
+    //Functional Requirement 5: Creating Menus
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Student> studentList = null;
@@ -132,18 +153,18 @@ public class StudentMarks {
                 break;
             case 2:
                 while (true) {
-        if (studentList != null) {
-            calculateTotalMarksAndDisplay(studentList);
-            break;  // Exit the loop if the operation is successful
-        } else {
-            System.out.println("Please read student data first (option 1).");
-            System.out.print("Press Enter to return to the main menu...");
-            scanner.nextLine();  // Consume the newline character
-            scanner.nextLine();  // Wait for user input
-            break;  // Exit the loop
-        }
-    }
-    break;  // Break added to exit the switch statement
+                    if (studentList != null) {
+                        calculateTotalMarksAndDisplay(studentList);
+                        break;  // Exit the loop if the operation is successful
+                    } else {
+                        System.out.println("Please read student data first (option 1).");
+                        System.out.print("Press Enter to return to the main menu...");
+                        scanner.nextLine();  // Consume the newline character
+                        scanner.nextLine();  // Wait for user input
+                    break;  // Exit the loop
+                    }
+                }
+                break;  // Break added to exit the switch statement
             case 3:
                 scanner.close();
                 System.exit(0);

@@ -1,4 +1,3 @@
-
 /**
  * Below written code is a simple program that reads students' marks froma given text file, calculates total marks for each student, 
  * prints the total marks less than a certain threshold, prints the top 5 students with highest marks and top students with lowest total marks.
@@ -68,7 +67,6 @@ class Student {
 }
 
 public class StudentMarks {
-
     public static ArrayList<Student> readStudentData(String filename) {
         ArrayList<Student> studentList = new ArrayList<>();
         //Functional requirement 1: Reading the student data from file
@@ -111,7 +109,6 @@ public class StudentMarks {
         } catch (FileNotFoundException e) {
             System.err.println("An error occurred while reading the file: " + e.getMessage());
         }
-
         return studentList;
     }
     
@@ -206,7 +203,6 @@ public class StudentMarks {
         }
     }
 
-
     //Functional Requirement 5: Creating Menus
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -276,8 +272,7 @@ public class StudentMarks {
             default:
                 System.out.println("Invalid choice. Try again.");
                 break;
-            }//end of switch
-            
+            }//end of switch   
         }
     }
 }

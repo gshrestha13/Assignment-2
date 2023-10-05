@@ -218,61 +218,79 @@ public class StudentMarks {
         
         System.out.print("Enter Your Choice: ");
         
-        int choice = scanner.nextInt();
-        scanner.nextLine(); //Concume the newline character
-        
-        switch(choice){//Created Switch to choose/create menu functions
-            case 1:
-                System.out.print("Enter the file name(Use this file Name: prog5001_students_grade_2022.csv): ");
-                String filename = scanner.nextLine();
-                studentList = readStudentData(filename);
-                break;
-            case 2:
-                while (true) {
-                    if (studentList != null) {
-                        calculateTotalMarksAndDisplay(studentList);
-                        break;  // Exit the loop if the operation is successful
-                    } else {
-                        System.out.println("Please read student data first (option 1).");
-                        System.out.print("Press Enter to return to the main menu...");
-                        scanner.nextLine();  // Consume the newline character
-                        scanner.nextLine();  // Wait for user input
-                    break;  // Exit the loop
+        if(scanner.hasNextInt()){
+            int choice = scanner.nextInt();
+            scanner.nextLine(); //Concume the newline character
+            
+            switch(choice){//Created Switch to choose/create menu functions
+                case 1:
+                    System.out.print("Enter the file name(Use this file Name: prog5001_students_grade_2022.csv): ");
+                    String filename = scanner.nextLine();
+                    studentList = readStudentData(filename);
+                    break;
+                case 2:
+                    while (true) {
+                        if (studentList != null) {
+                            calculateTotalMarksAndDisplay(studentList);
+                            break;  // Exit the loop if the operation is successful
+                        } else {
+                            System.out.println("Please read student data first (option 1).");
+                            System.out.print("Press Enter to return to the main menu...");
+                            scanner.nextLine();  // Consume the newline character
+                            scanner.nextLine();  // Wait for user input
+                        break;  // Exit the loop
+                        }
                     }
-                }
-                break;  // Break added to exit the switch statement
-            case 3:
-                if(studentList != null){
-                    System.out.print("Please Enter the Threshold: ");
-                    double threshold = scanner.nextDouble();
-                    printStudentsBelowThreshold(studentList, threshold);
-                }else{
-                    System.out.println("Please read student data first (option 1).");
-                }
-                // Prompt to return to the main menu
-                System.out.print("Press Enter to return to the main menu...");
-                scanner.nextLine();  // Consume the newline character
-                scanner.nextLine();  // Wait for user input
-                break;  // Break added to exit the switch statement
-            case 4:
-                if(studentList != null){
-                    printTopAndBottomStudents(studentList);
-                }else{
-                    System.out.println("Please read student data first (option 1).");
-                }
-                // Prompt to return to the main menu
-                System.out.print("Press Enter to return to the main menu...");
-                scanner.nextLine();  // Consume the newline character
-                scanner.nextLine();  // Wait for user input
-                break;  // Break added to exit the switch statement
-            case 5:
-                scanner.close();
-                System.exit(0);
-                break;
-            default:
-                System.out.println("Invalid choice. Try again.");
-                break;
-            }//end of switch   
+                    break;  // Break added to exit the switch statement
+                case 3:
+                    if(studentList != null){
+                        while (true) {
+                            System.out.print("Please Enter the Threshold: ");
+
+                            // Check if the input is a double (threshold)
+                            if (scanner.hasNextDouble()) {
+                            double threshold = scanner.nextDouble();
+                            scanner.nextLine();  // Consume the newline character
+                            printStudentsBelowThreshold(studentList, threshold);
+                            break;  // Exit the loop if the operation is successful
+                        } else {
+                            // Consume invalid input
+                            scanner.nextLine();
+                            System.out.println("Invalid input. Please enter a valid threshold (a number).");
+                        }
+                        }
+                    }else{
+                        System.out.println("Please read student data first (option 1).");
+                    }
+                    // Prompt to return to the main menu
+                    System.out.print("Press Enter to return to the main menu...");
+                    scanner.nextLine();  // Consume the newline character
+                    scanner.nextLine();  // Wait for user input
+                    break;  // Break added to exit the switch statement
+                case 4:
+                    if(studentList != null){
+                        printTopAndBottomStudents(studentList);
+                    }else{
+                        System.out.println("Please read student data first (option 1).");
+                    }
+                    // Prompt to return to the main menu
+                    System.out.print("Press Enter to return to the main menu...");
+                    scanner.nextLine();  // Consume the newline character
+                    scanner.nextLine();  // Wait for user input
+                    break;  // Break added to exit the switch statement
+                case 5:
+                    scanner.close();
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+                    break;
+                }//end of switch   
+            }else{
+                //Consume invalid input
+                scanner.nextLine();
+                System.out.println("Invalid input. Please enter a valid menu choice (1-5).");
+            }
         }
     }
 }
